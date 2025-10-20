@@ -1,6 +1,88 @@
-*.i
-*.ii
-*.gpu
-*.ptx
-*.cubin
-*.fatbin
+# CUDA
+*~
+textures
+*#
+.#*
+bin
+dbg
+tags
+.ycm_extra_conf.pyc
+*.autosave
+*DS_Store*
+*.gz
+*.rpm
+*.zip
+*.bak
+*.patch
+.vscode
+deps
+tbb
+ispc
+*.aux
+*.bbl
+*.blg
+*.brf
+*.dvi
+*.lbl
+*.log
+*.swp
+*.out
+Session.vim
+.idea
+!*png/*.pdf
+.vs/
+
+# vscode
+**/.vscode
+
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+*.DS_Store
+
+examples/
+build/
+
+# egg
+**/*.egg-info
+
+# build directory
+build/** 
+
+# pycache
+**/__pycache__/
+
+# test ouputs
+results/
+
+# Pytest
+.pytest_cache
+

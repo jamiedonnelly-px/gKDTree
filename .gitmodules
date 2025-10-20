@@ -1,0 +1,6 @@
+[submodule "3rd_party/pybind11"]
+	path = 3rd_party/pybind11
+	url = https://github.com/pybind/pybind11.git
+[submodule "3rd_party/cudaKDTree"]
+	path = 3rd_party/cudaKDTree
+	url = https://github.com/ingowald/cudaKDTree.git
