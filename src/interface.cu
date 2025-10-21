@@ -134,7 +134,7 @@ void knnSearchCuda(
 }
 
 std::tuple<py::array_t<int>, py::array_t<float>> 
-knnSearchCudaNumPy(py::array_t<float> points_py, 
+knnCudaNumPy(py::array_t<float> points_py, 
                    py::array_t<float> queries_py,
                    int k) {
     
@@ -168,12 +168,12 @@ knnSearchCudaNumPy(py::array_t<float> points_py,
     return std::make_tuple(indices_py, distances_py);
 }
 
-PYBIND11_MODULE(_gkdTree_internal, mod) {
+PYBIND11_MODULE(_cuKDTree, mod) {
     mod.doc() = R"pbdoc(
         CUDA KD-Tree Python bindings
     )pbdoc";
     
-    mod.def("knn_cuda", &knnSearchCudaNumPy,
+    mod.def("knn_cuda", &knnCudaNumPy,
         "Perform KNN search using CUDA",
         py::arg("points"), 
         py::arg("queries"), 

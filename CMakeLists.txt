@@ -29,27 +29,17 @@ endif()
 add_subdirectory(3rd_party/cudaKDTree)
 add_subdirectory(3rd_party/pybind11)
 
+# First, configure the library with OpenMP
+if(OpenMP_CXX_FOUND)
+    target_link_libraries(cudaKDTree PRIVATE OpenMP::OpenMP_CXX)
+    target_compile_definitions(cudaKDTree PRIVATE OPENMP_FOUND)
+endif()
+
 # Python module
-pybind11_add_module(_gkdTree_internal src/interface.cu)
+pybind11_add_module(_cudaKDTree src/interface.cu)
 target_link_libraries(
-    _gkdTree_internal 
+    _cudaKDTree 
     PRIVATE 
     cudaKDTree
 )
-
-# # Standalone executable  
-# add_executable(gkdtree src/interface.cu)
-# target_link_libraries(gkdtree PRIVATE cudaKDTree)
-# # Add OpenMP if found
-# if(OpenMP_CXX_FOUND)
-#     target_link_libraries(gkdtree PRIVATE OpenMP::OpenMP_CXX)
-#     target_compile_definitions(gkdtree PRIVATE OPENMP_FOUND)
-# endif()
-
-
-# Add OpenMP if found
-if(OpenMP_CXX_FOUND)
-    target_link_libraries(_gkdTree_internal PRIVATE OpenMP::OpenMP_CXX)
-    target_compile_definitions(_gkdTree_internal PRIVATE OPENMP_FOUND)
-endif()
 
