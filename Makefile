@@ -1,7 +1,15 @@
 include .env
 
-build:
-	@mkdir -p build && cd build && CUDACXX=/usr/local/cuda-12/bin/nvcc cmake -DLLAMA_CUBLAS=on -DCMAKE_CUDA_ARCHITECTURES=native .. && make -j4
+.PHONY: install-package
+
+env: 
+	@conda create -y -n ${CONDA_ENV_NAME} python=${PYTHON_VER}
+
+rmenv:
+	@conda remove --all -y -n ${CONDA_ENV_NAME}
+
+install-package:
+	@pip install --force-reinstall -v . 
 
 clean:
 	@rm -rf build

@@ -168,7 +168,7 @@ knnSearchCudaNumPy(py::array_t<float> points_py,
     return std::make_tuple(indices_py, distances_py);
 }
 
-PYBIND11_MODULE(_gkdTree_internal, mod) {
+PYBIND11_MODULE(_internal, mod) {
     mod.doc() = R"pbdoc(
         CUDA KD-Tree Python bindings
     )pbdoc";
