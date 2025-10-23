@@ -9,7 +9,7 @@ requires = [
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "px_field_utils"
+name = "gKDTree"
 version = "1.0.0"
 authors = [{name = "Jamie Donnelly", email = "jamie.donnelly@physicsx.ai"}]
 requires-python = ">=3.10, <3.13"
@@ -30,11 +30,11 @@ dev = [
 
 [tool.setuptools.packages.find]
 include = [
-    "px_field_utils"
+    "gKDTree"
 ]
 
 [tool.setuptools.package-data]
-px_field_utils = ["*.so"]
+gKDTree = ["*.so"]
 
 [tool.ruff]
 exclude = [

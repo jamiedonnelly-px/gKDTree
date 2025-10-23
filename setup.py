@@ -75,7 +75,7 @@ def main():
     clone_submodule()
     setuptools.setup(
         ext_modules=[CMakeExtension("_internal")],
-        ext_package="px_field_utils",
+        ext_package="gKDTree",
         cmdclass=dict(build_ext=CMakeBuild),
     )
 

@@ -1,26 +1,24 @@
-from px_field_utils import knn_cuda
+from gKDTree import cuNN
 import numpy as np
 from time import time
-from scipy.spatial import KDTree
 from tqdm import tqdm
 
 def test():
     N, q, k = 2**18, 2**22, 64
     points, queries = np.random.randn(N, 3), np.random.randn(q, 3)
     start = time()
-    gpu_indices, _ = knn_cuda(points, queries, k)
+    _, gpu_indices = cuNN(points, queries, k, device="gpu")
     end = time()
-    print(f"Took {end-start:.3f}s on GPU")
+    print(f"Took {end-start:.3f}s on GPU", flush=True)
 
     start = time()
-    tree = KDTree(points)
-    _, cpu_indices = tree.query(queries, k=k)
+    _, cpu_indices = cuNN(points, queries, k, device="cpu")
     end = time()
-    print(f"Took {end-start:.3f}s on CPU")
+    print(f"Took {end-start:.3f}s on CPU", flush=True)
 
     for i in tqdm(range(100)):
         assert np.all(sorted(cpu_indices[i]) == sorted(gpu_indices[i]))
-    print(f"First {100} indices match perfectly.")
+    print(f"First {100} indices match perfectly.", flush=True)
 
 
 if __name__=="__main__":

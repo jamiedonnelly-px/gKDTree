@@ -7,6 +7,7 @@ A GPU-accelerated K-nearest neighbors library for 3D point clouds using CUDA.
 Given some observed points, $P\in\mathbb{R}^{N\times 3}$, to find the `K` nearest neighbours for a set of query points, $Q\in\mathbb{R}^{M\times 3}$, and execute the query on the GPU:
 
 ```python
+from gKDTree import cuNN
 distances, indices = cuNN(P, Q, K, device="gpu")
 ```
 

@@ -159,9 +159,7 @@ knnSearchCudaNumPy(py::array_t<float> points_py,
     knnSearchCuda(points, numPoints, queries, numQueries, k, 
                        indices_ptr, distances_ptr);
     
-    // Attempt to flush the device 
     cudaDeviceSynchronize();
-    cudaDeviceReset();
 
     return std::make_tuple(indices_py, distances_py);
 }
