@@ -75,7 +75,7 @@ def cuNN(
             
     Raises:
         AssertionError: If input validation fails:
-            - k is not an integer
+            - k is not a pre-approved integer
             - points or queries are not 2D arrays
             - points or queries don't have exactly 3 columns
             - device is not "cpu" or "gpu"
