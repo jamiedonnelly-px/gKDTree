@@ -62,18 +62,16 @@ void launchKnnKernel(
     switch(k) {
         case 1:  KnnKernelFixed<1> <<<numBlocks, threadsPerBlock>>>(d_queries, numQueries, tree, d_indices, d_distances); break;
         case 2:  KnnKernelFixed<2> <<<numBlocks, threadsPerBlock>>>(d_queries, numQueries, tree, d_indices, d_distances); break;
-        case 3:  KnnKernelFixed<3> <<<numBlocks, threadsPerBlock>>>(d_queries, numQueries, tree, d_indices, d_distances); break;
         case 4:  KnnKernelFixed<4> <<<numBlocks, threadsPerBlock>>>(d_queries, numQueries, tree, d_indices, d_distances); break;
-        case 5:  KnnKernelFixed<5> <<<numBlocks, threadsPerBlock>>>(d_queries, numQueries, tree, d_indices, d_distances); break;
         case 8:  KnnKernelFixed<8> <<<numBlocks, threadsPerBlock>>>(d_queries, numQueries, tree, d_indices, d_distances); break;
-        case 10: KnnKernelFixed<10><<<numBlocks, threadsPerBlock>>>(d_queries, numQueries, tree, d_indices, d_distances); break;
         case 16: KnnKernelFixed<16><<<numBlocks, threadsPerBlock>>>(d_queries, numQueries, tree, d_indices, d_distances); break;
         case 32: KnnKernelFixed<32><<<numBlocks, threadsPerBlock>>>(d_queries, numQueries, tree, d_indices, d_distances); break;
-        case 50: KnnKernelFixed<50><<<numBlocks, threadsPerBlock>>>(d_queries, numQueries, tree, d_indices, d_distances); break;
         case 64: KnnKernelFixed<64><<<numBlocks, threadsPerBlock>>>(d_queries, numQueries, tree, d_indices, d_distances); break;
+        case 128: KnnKernelFixed<128><<<numBlocks, threadsPerBlock>>>(d_queries, numQueries, tree, d_indices, d_distances); break;
+        case 256: KnnKernelFixed<256><<<numBlocks, threadsPerBlock>>>(d_queries, numQueries, tree, d_indices, d_distances); break;
         default:
             throw std::runtime_error("Unsupported k value: " + std::to_string(k) + 
-                                    ". Supported values: 1,2,3,4,5,8,10,16,32,50,64");
+                                    ". Supported values: 1, 2, 4, 8, 16, 32, 64, 128, 256");
     }
     cudaDeviceSynchronize();
 }
