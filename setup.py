@@ -7,7 +7,17 @@ from setuptools.command.build_ext import build_ext
 
 # constants to use
 cwd = os.path.dirname(os.path.abspath(__file__))
-CUDA_DEFAULT_PATH = "/usr/local/cuda-12"
+CUDA_DEFAULT_PATH = "/usr/local/cuda"
+
+def _find_cuda() -> str:
+    """ Attempts to find a NVCC binary to compile the source files with. """
+    # Attempt to find environment variable set
+    if not (nvcc_path := os.environ.get("NVCC_PATH", False)):
+        cuda_home = cuda_home = os.environ.get('CUDA_HOME', CUDA_DEFAULT_PATH)
+        nvcc_path = os.path.join(cuda_home, 'bin', 'nvcc')
+    if not os.path.exists(nvcc_path):
+        raise RuntimeError(f"NVCC not found at {nvcc_path}. Please try assign the environment variable `NVCC_PATH` to a valid binary.")
+    return nvcc_path
 
 class CMakeExtension(setuptools.Extension):
     def __init__(self, name, sourcedir="", cmake_args=(), exclude_arch=False):
@@ -36,12 +46,7 @@ class CMakeBuild(build_ext):
         os.makedirs(extdir, exist_ok=True)
 
         # Find CUDA
-        cuda_home = os.environ.get('CUDA_HOME', CUDA_DEFAULT_PATH)
-        nvcc_path = os.path.join(cuda_home, 'bin', 'nvcc')
-        
-        if not os.path.exists(nvcc_path):
-            raise RuntimeError(f"NVCC not found at {nvcc_path}")
-
+        nvcc_path = _find_cuda()
         cmake_args = [
             f"-DCMAKE_CUDA_COMPILER={nvcc_path}",
             f"-DCMAKE_LIBRARY_OUTPUT_DIRECTORY={extdir}",
