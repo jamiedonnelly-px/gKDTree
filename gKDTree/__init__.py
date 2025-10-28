@@ -136,11 +136,11 @@ def knn_search_3d(
         case "cpu":
             LOGGER.debug(f"Using CPU KDTree for {len(queries)} queries against {len(points)} points")
             return _cpu_knn(points, queries, k)
-        case "gpu":
+        case "cuda":
             LOGGER.debug(f"Using GPU CUDA for {len(queries)} queries against {len(points)} points")
             return _gpu_knn(points, queries, k)
         case _:
-            raise AssertionError(f"device must be either 'cpu' or 'gpu', received: '{backend}'")
+            raise AssertionError(f"backend must be either 'cpu' or 'cuda', received: '{backend}'")
 
 def is_cuda_available() -> bool:
     """Check if CUDA backend is available"""
