@@ -112,17 +112,16 @@ class CMakeBuild(build_ext):
 
         # If found - copy binary and return 
         if precompiled_binary and not int(os.environ.get("FORCE_BUILD_FROM_SOURCE", 0)):
-            LOGGER.info(f"Found matching precompiled binary.\
-                        Copying {precompiled_binary} to {extdir}.")
-            shutil.copy(precompiled_binary, extdir)
+            target_path = self.get_ext_fullpath(ext.name)
+            LOGGER.info(f"Found matching precompiled binary. Copying {precompiled_binary} to {target_path}.")
+            shutil.copy2(precompiled_binary, extdir)
             return 
 
         # Find CUDA
         try:
             nvcc_path = _find_cuda()
         except RuntimeError as e:
-            LOGGER.warning(f"Encountered error {e}.\
-                           Building {__name__} in CPU-only mode.")
+            LOGGER.warning(f"Encountered error {e}. Building {__name__} in CPU-only mode.")
             return
         cmake_args = [
             f"-DCMAKE_CUDA_COMPILER={nvcc_path}",
