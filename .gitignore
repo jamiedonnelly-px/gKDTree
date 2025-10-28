@@ -86,3 +86,5 @@ results/
 # Pytest
 .pytest_cache
 
+# precompiled binaries
+!**/precompiled_binaries/*.so
