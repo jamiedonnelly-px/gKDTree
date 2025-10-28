@@ -91,8 +91,13 @@ class CMakeBuild(build_ext):
             self.build_extension(ext)
 
     def build_extension(self, ext):
+
+        # check for CPU-only build
+        if int(os.environ.get("FORCE_CPU_ONLY", 0)):
+            LOGGER.info(f"Using CPU-only version of the package.")
+            return
+
         extdir = os.path.abspath(os.path.dirname(self.get_ext_fullpath(ext.name)))
-        print(f"EXTDIR: {extdir}", flush=True)
 
         # Create the build directory
         os.makedirs(extdir, exist_ok=True)
@@ -106,8 +111,8 @@ class CMakeBuild(build_ext):
             raise Exception(f"Build failed with exception {e}.")
 
         # If found - copy binary and return 
-        if precompiled_binary:
-            LOGGER.info(f"Found matching precompiled binary. \
+        if precompiled_binary and not int(os.environ.get("FORCE_BUILD_FROM_SOURCE", 0)):
+            LOGGER.info(f"Found matching precompiled binary.\
                         Copying {precompiled_binary} to {extdir}.")
             shutil.copy(precompiled_binary, extdir)
             return 
@@ -116,7 +121,7 @@ class CMakeBuild(build_ext):
         try:
             nvcc_path = _find_cuda()
         except RuntimeError as e:
-            LOGGER.warning(f"Encountered error {e}. \
+            LOGGER.warning(f"Encountered error {e}.\
                            Building {__name__} in CPU-only mode.")
             return
         cmake_args = [
