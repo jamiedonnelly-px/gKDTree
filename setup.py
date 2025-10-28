@@ -114,7 +114,7 @@ class CMakeBuild(build_ext):
         if precompiled_binary and not int(os.environ.get("FORCE_BUILD_FROM_SOURCE", 0)):
             target_path = self.get_ext_fullpath(ext.name)
             LOGGER.info(f"Found matching precompiled binary. Copying {precompiled_binary} to {target_path}.")
-            shutil.copy2(precompiled_binary, extdir)
+            shutil.copy2(precompiled_binary, target_path)
             return 
 
         # Find CUDA
